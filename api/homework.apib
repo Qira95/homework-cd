@@ -1,0 +1,81 @@
+FORMAT: 1A
+HOST: http://homework
+
+# Homework Device Service
+
+## Group Device [/device]
+
+For access to this endpoint, you need can have any role. You will have access only to your data that are belonging
+to the userId defined in your JWT token.
+
+### Create device entry [POST]
+
++ Request (application/json)
+    + Attributes (New device request)
+
++ Response 200 (application/json)
+    + Attributes (Device detail)
+
+### Device detail [GET /device/{deviceId}]
+
++ Parameters
+    + deviceId (string, required, `6fab29b8-3286-4df8-b861-6de2a2ff581c`) ... Device id
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (Device detail)
+
+### Get all user devices [GET]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (array[Device detail])
+
+### Update device entry [PUT /device/{deviceId}]
+
++ Parameters
+    + deviceId (string, required, `6fab29b8-3286-4df8-b861-6de2a2ff581c`) ... Device id
+
++ Request (application/json)
+    + Attributes (Updated device request)
+
++ Response 200 (application/json)
+    + Attributes (Device detail)
+
+### Delete device entry [DELETE /device/{deviceId}]
+
++ Parameters
+    + deviceId (string, required, `6fab29b8-3286-4df8-b861-6de2a2ff581c`) ... Device id
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+## Group Backoffice [/backoffice]
+
+### Get all user devices [GET]
+
+For access to this endpoint, you need to have role of 'BACKOFFICE'
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (array[Device detail])
+
+
+# Data structure
+
+## Device detail
++ operatingSystem: ANDROID, IOS (enum, required) ... OS of the device
++ deviceId: 6fab29b8-3286-4df8-b861-6de2a2ff581c (string, required) ... Device's id
++ createdOn: 2015-06-02T21:34:33.616Z (string, required) ... Instant of when the device was created
++ updatedOn: 2015-06-02T21:34:33.616Z (string, optional) ... Last update date
+
+## New device request
++ operatingSystem: ANDROID, IOS (enum, required) ... OS of the device
++ deviceId: 6fab29b8-3286-4df8-b861-6de2a2ff581c (string, required) ... Device's id
+
+## Updated device request
++ operatingSystem: ANDROID, IOS (enum, required) ... OS of the device

@@ -1,0 +1,53 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'com.bmuschko.docker-spring-boot-application' version '7.1.0'
+}
+
+apply plugin: 'application'
+apply plugin: 'java'
+
+group = 'home.work'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 16
+targetCompatibility = 16
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'org.flywaydb:flyway-core:5.2.4'
+	implementation 'org.postgresql:postgresql:42.3.1'
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test:5.5.3'
+	testImplementation 'org.testcontainers:testcontainers:1.16.2'
+	testImplementation 'org.testcontainers:postgresql:1.16.2'
+	testImplementation 'org.flywaydb.flyway-test-extensions:flyway-spring-test:5.2.4'
+
+}
+
+test {
+	useJUnitPlatform()
+}
+
+compileJava {
+	options.compilerArgs << '-parameters'
+}
+
+docker {
+	springBootApplication {
+		baseImage = 'azul/zulu-openjdk-alpine:16'
+		ports = [15000]
+		images = [projectName]
+		jvmArgs = ['-Dspring.profiles.active=production', '-Xmx2048m']
+	}
+}
